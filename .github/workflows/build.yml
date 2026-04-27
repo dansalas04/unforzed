@@ -52,10 +52,17 @@ jobs:
       - name: Verify monkeyc
         run: |
           MONKEYC=$(ls ~/ciq-sdk/ciq-bundle/Sdks/*/bin/monkeyc)
+          SDK_BIN=$(dirname $MONKEYC)
           echo "monkeyc: $MONKEYC"
           $MONKEYC --version
-          echo "Devices available:"
+          echo "--- bin/ contents ---"
+          ls $SDK_BIN/
+          echo "--- Devices/ ---"
           ls ~/ciq-sdk/ciq-bundle/Devices/
+          echo "--- compilerInfo.xml ---"
+          cat $SDK_BIN/compilerInfo.xml 2>/dev/null || echo "no compilerInfo.xml"
+          echo "--- fenix8pro47mm device dir ---"
+          ls ~/ciq-sdk/ciq-bundle/Devices/fenix8pro47mm/ 2>/dev/null || echo "not found"
 
       # ── 4. Developer key ────────────────────────────────────────────────────
       - name: Setup developer key
