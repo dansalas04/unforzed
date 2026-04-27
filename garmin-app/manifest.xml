@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<iq:manifest xmlns:iq="http://www.garmin.com/xml/connectiq" version="3">
+  <iq:application
+    entry="UnforzedApp"
+    id="a3f2c1d4-e5b6-7890-abcd-ef1234567891"
+    launchType="once"
+    minSdkVersion="3.2.0"
+    name="@Strings.AppName"
+    type="activity"
+    version="1.0.0">
+
+    <iq:products>
+      <!-- Forerunner 255 -->
+      <iq:product id="fr255"/>
+      <iq:product id="fr255s"/>
+      <iq:product id="fr255m"/>
+      <iq:product id="fr255sm"/>
+      <!-- Forerunner 265 -->
+      <iq:product id="fr265"/>
+      <iq:product id="fr265s"/>
+      <!-- Fenix 7 -->
+      <iq:product id="fenix7"/>
+      <iq:product id="fenix7s"/>
+      <iq:product id="fenix7x"/>
+      <iq:product id="fenix7pro"/>
+      <iq:product id="fenix7xpro"/>
+      <!-- Venu 2 / 3 -->
+      <iq:product id="venu2"/>
+      <iq:product id="venu2s"/>
+      <iq:product id="venu3"/>
+      <iq:product id="venu3s"/>
+    </iq:products>
+
+    <iq:permissions>
+      <iq:uses-permission id="FitContributor"/>
+      <iq:uses-permission id="UserProfile"/>
+    </iq:permissions>
+
+    <iq:languages>
+      <iq:language id="spa"/>
+      <iq:language id="eng"/>
+    </iq:languages>
+
+  </iq:application>
+</iq:manifest>

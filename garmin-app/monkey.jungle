@@ -1,0 +1,7 @@
+project.manifest = manifest.xml
+
+base.sourcePath = source
+base.resourcePath = resources
+
+# Strip debug annotations in release builds
+base.excludeAnnotations = DEBUG

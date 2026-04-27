@@ -1,0 +1,4 @@
+garmin-app/developer_key.pem
+garmin-app/developer_key.der
+garmin-app/build/
+.DS_Store

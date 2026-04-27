@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<strings>
+  <string id="AppName">unforzed</string>
+
+  <!-- Setup -->
+  <string id="SetupPositionTitle">¿Tu posición?</string>
+  <string id="SetupDrive">DRIVE</string>
+  <string id="SetupReves">REVÉS</string>
+  <string id="SetupServeTitle">¿Quién saca?</string>
+  <string id="SetupServeNewSetTitle">Set %1 — ¿quién saca?</string>
+  <string id="SetupNosotros">NOSOTROS</string>
+  <string id="SetupEllos">ELLOS</string>
+
+  <!-- Dashboard -->
+  <string id="DashSet">Set %1</string>
+  <string id="DashGame">Juego %1</string>
+  <string id="DashEnfTotal">ENF</string>
+  <string id="DashEnfPct">%ENF</string>
+  <string id="DashWinServe">%Ganados c/saque</string>
+  <string id="DashWinNoServe">%Ganados s/saque</string>
+
+  <!-- Feedback -->
+  <string id="FbGanado">GANADO</string>
+  <string id="FbPerdido">PERDIDO</string>
+  <string id="FbEnf">ENF</string>
+  <string id="FbSaque">SAQUE</string>
+  <string id="FbDeshecho">DESHECHO</string>
+  <string id="FbConSaque">con saque</string>
+  <string id="FbSinSaque">sin saque</string>
+  <string id="FbEnfEsteJuego">ENF este juego</string>
+  <string id="FbSaqueEliminado">saque eliminado</string>
+  <string id="FbEnfEliminado">ENF eliminado</string>
+  <string id="FbJuegoReabierto">juego reabierto</string>
+  <string id="FbNadaQueDeshacer">Nada que deshacer</string>
+  <string id="FbJuego">Juego %1</string>
+  <string id="FbDrive">· drive</string>
+  <string id="FbReves">· revés</string>
+
+  <!-- Set Summary -->
+  <string id="SetSummaryTitle">SET %1 TERMINADO</string>
+  <string id="SetSummaryTiebreak">SET %1 · TIE-BREAK</string>
+  <string id="SetSummaryEnf">%1 ENF</string>
+  <string id="SetSummaryConSaque">c/saque %1%</string>
+  <string id="SetSummarySinSaque">s/saque %1%</string>
+
+  <!-- Edit Menu -->
+  <string id="EditMenuTitle">Edición</string>
+  <string id="EditMenuGame">Editar juego anterior</string>
+  <string id="EditMenuPosition">Cambiar posición</string>
+  <string id="EditMenuScore">Editar marcador</string>
+  <string id="EditMenuSettings">Ajustes del partido</string>
+  <string id="EditMenuEnd">Terminar partido</string>
+
+  <!-- Edit Game -->
+  <string id="EditGameTitle">Juego %1 · Set %2</string>
+  <string id="EditGameResult">Resultado: %1</string>
+  <string id="EditGameSaque">Saque: %1</string>
+  <string id="EditGameEnf">ENF: %1</string>
+  <string id="EditGameSi">Sí</string>
+  <string id="EditGameNo">No</string>
+
+  <!-- Edit Score -->
+  <string id="EditScoreJuegosNos">Juegos nuestros</string>
+  <string id="EditScoreJuegosEllos">Juegos ellos</string>
+  <string id="EditScoreSetsNos">Sets nuestros</string>
+  <string id="EditScoreSetsEllos">Sets ellos</string>
+
+  <!-- Match Settings -->
+  <string id="SettingsTitle">Ajustes</string>
+  <string id="SettingsJuegosPorSet">Juegos por set</string>
+  <string id="SettingsTieBreak">Tie-break</string>
+  <string id="SettingsPuntoDeOro">Punto de oro</string>
+  <string id="SettingsOn">ON</string>
+  <string id="SettingsOff">OFF</string>
+
+  <!-- End Match -->
+  <string id="EndMatchTitle">¿Terminar partido?</string>
+  <string id="EndMatchConfirm">START = sí</string>
+  <string id="EndMatchCancel">BACK = no</string>
+
+  <!-- Final Summary -->
+  <string id="SummaryPage">%1 / 4</string>
+  <string id="SummaryGanado">GANADO</string>
+  <string id="SummaryPerdido">PERDIDO</string>
+  <string id="SummaryDuration">Duración</string>
+  <string id="SummaryGames">Juegos totales</string>
+  <string id="SummarySets">Sets</string>
+  <string id="SummaryConSaque">Con saque</string>
+  <string id="SummarySinSaque">Sin saque</string>
+  <string id="SummaryEnfTotal">ENF totales</string>
+  <string id="SummaryEnfPct">ENF / juego</string>
+  <string id="SummaryBySet">Por set</string>
+  <string id="SummaryBestSet">Mejor set</string>
+  <string id="SummaryHistorico">Histórico</string>
+  <string id="SummaryWinPct">% victorias</string>
+  <string id="SummaryRacha">Racha</string>
+  <string id="SummarySave">START = guardar</string>
+  <string id="SummarySet">Set %1</string>
+  <string id="SummarySetScore">%1-%2</string>
+  <string id="SummaryMin">min</string>
+  <string id="SummaryPartidos">últimos partidos</string>
+</strings>
