@@ -47,7 +47,9 @@ jobs:
             "https://api.github.com/repos/${{ github.repository }}/releases/assets/406929642" \
             -o /tmp/sdk.zip
           unzip -q /tmp/sdk.zip -d ~/ciq-sdk
-          chmod +x ~/ciq-sdk/ciq-bundle/Sdks/*/bin/monkeyc
+          chmod -R 755 ~/ciq-sdk
+          echo "--- zip top-level entries ---"
+          unzip -l /tmp/sdk.zip | head -30
 
       - name: Verify monkeyc
         run: |
@@ -61,8 +63,12 @@ jobs:
           ls ~/ciq-sdk/ciq-bundle/Devices/
           echo "--- compilerInfo.xml ---"
           cat $SDK_BIN/compilerInfo.xml 2>/dev/null || echo "no compilerInfo.xml"
-          echo "--- fenix8pro47mm device dir ---"
+          echo "--- Devices/ (con permisos) ---"
+          ls -la ~/ciq-sdk/ciq-bundle/Devices/
+          echo "--- fenix8pro47mm ---"
           ls ~/ciq-sdk/ciq-bundle/Devices/fenix8pro47mm/ 2>/dev/null || echo "not found"
+          echo "--- projectInfo.xml ---"
+          cat $SDK_BIN/projectInfo.xml 2>/dev/null | head -40 || echo "no projectInfo.xml"
 
       # ── 4. Developer key ────────────────────────────────────────────────────
       - name: Setup developer key
