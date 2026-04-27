@@ -67,7 +67,7 @@ jobs:
             -f garmin-app/monkey.jungle \
             -o garmin-app/build/unforzed_fr265.prg \
             -d fr265 \
-            -c garmin-app/developer_key.der
+            -y garmin-app/developer_key.der
 
       - name: Upload validation artifact
         if: github.event_name == 'push' || github.event_name == 'pull_request'
@@ -90,7 +90,7 @@ jobs:
               -f garmin-app/monkey.jungle \
               -o garmin-app/build/unforzed_${DEVICE}.iq \
               -d $DEVICE \
-              -c garmin-app/developer_key.der \
+              -y garmin-app/developer_key.der \
               --release
           done
 

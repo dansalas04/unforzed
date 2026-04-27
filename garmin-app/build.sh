@@ -187,7 +187,7 @@ build_device() {
   echo ""
   info "Building ${BOLD}${dev}${NC} → $(basename "${out}")"
 
-  local flags=(-f "${JUNGLE}" -o "${out}" -d "${dev}" -c "${KEY_DER}")
+  local flags=(-f "${JUNGLE}" -o "${out}" -d "${dev}" -y "${KEY_DER}")
   $RELEASE && flags+=(--release) || flags+=()
 
   if "${MONKEYC}" "${flags[@]}" 2>&1; then
