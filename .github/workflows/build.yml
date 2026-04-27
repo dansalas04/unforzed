@@ -50,7 +50,15 @@ jobs:
           chmod +x ~/ciq-sdk/*/bin/monkeyc
 
       - name: Verify monkeyc
-        run: ~/ciq-sdk/*/bin/monkeyc --version
+        run: |
+          SDK_DIR=$(ls ~/ciq-sdk | head -1)
+          echo "SDK dir: $SDK_DIR"
+          ls ~/ciq-sdk/$SDK_DIR/
+          ~/ciq-sdk/$SDK_DIR/bin/monkeyc --version
+          # List available device IDs
+          ls ~/ciq-sdk/$SDK_DIR/devices/ 2>/dev/null | head -20 || \
+          ls ~/ciq-sdk/$SDK_DIR/bin/../devices/ 2>/dev/null | head -20 || \
+          find ~/ciq-sdk/$SDK_DIR -name "devices.xml" 2>/dev/null | head -5
 
       # ── 4. Developer key ────────────────────────────────────────────────────
       - name: Setup developer key
