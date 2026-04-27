@@ -6,62 +6,69 @@ on:
   pull_request:
     branches: [main]
   release:
-    types: [created]   # en release: compila los 15 targets y adjunta los .iq
+    types: [created]
 
 env:
-  SDK_VERSION: "9.1.0"   # actualiza aquí cuando salga nueva versión del SDK
+  SDK_VERSION: "9.1.0"
+  SDK_ASSET: "ciq-sdk-9.1.0.zip"
+  SDK_RELEASE_TAG: "sdk-assets"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       # ── 1. Código ───────────────────────────────────────────────────────────
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ── 2. Java (monkeyc lo necesita internamente) ───────────────────────
+      # ── 2. Java ─────────────────────────────────────────────────────────────
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      # ── 3. SDK (cacheado por versión) ────────────────────────────────────
+      # ── 3. SDK desde GitHub Release (cacheado por versión) ─────────────────
       - name: Cache SDK
         uses: actions/cache@v4
         id: sdk-cache
         with:
           path: ~/ciq-sdk
-          key: ciq-sdk-lin-${{ env.SDK_VERSION }}
+          key: ciq-sdk-mac-${{ env.SDK_VERSION }}
 
-      - name: Download SDK
+      - name: Download SDK from release
         if: steps.sdk-cache.outputs.cache-hit != 'true'
         run: |
           mkdir -p ~/ciq-sdk
-          wget -q "${{ secrets.CIQ_SDK_URL }}" -O /tmp/sdk.zip
+          curl -L \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/octet-stream" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/assets/$(
+              curl -s \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ env.SDK_RELEASE_TAG }}" \
+                | python3 -c "import sys,json; assets=json.load(sys.stdin)['assets']; print(next(a['id'] for a in assets if a['name']=='${{ env.SDK_ASSET }}'))"
+            )" \
+            -o /tmp/sdk.zip
           unzip -q /tmp/sdk.zip -d ~/ciq-sdk
           chmod +x ~/ciq-sdk/*/bin/monkeyc
 
       - name: Verify monkeyc
-        run: |
-          SDK_DIR=$(ls ~/ciq-sdk | head -1)
-          ~/ciq-sdk/$SDK_DIR/bin/monkeyc --version
+        run: ~/ciq-sdk/*/bin/monkeyc --version
 
-      # ── 4. Developer key (almacenada como GitHub Secret en base64) ───────
+      # ── 4. Developer key ────────────────────────────────────────────────────
       - name: Setup developer key
         run: |
           echo "${{ secrets.DEVELOPER_KEY_B64 }}" | base64 -d \
             > garmin-app/developer_key.der
 
-      # ── 5a. Push a main → compila solo fr265 (build rápido de validación) ─
-      - name: Build (validation — fr265)
+      # ── 5a. Push / PR → compila fr265 como validación ──────────────────────
+      - name: Build fr265 (validation)
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
-          SDK_DIR=$(ls ~/ciq-sdk | head -1)
-          MONKEYC=~/ciq-sdk/$SDK_DIR/bin/monkeyc
           mkdir -p garmin-app/build
-          $MONKEYC \
+          ~/ciq-sdk/*/bin/monkeyc \
             -f garmin-app/monkey.jungle \
             -o garmin-app/build/unforzed_fr265.prg \
             -d fr265 \
@@ -75,24 +82,16 @@ jobs:
           path: garmin-app/build/unforzed_fr265.prg
           retention-days: 7
 
-      # ── 5b. Release → compila los 15 targets y genera .iq ────────────────
+      # ── 5b. Release → compila los 15 targets ────────────────────────────────
       - name: Build all targets (release)
         if: github.event_name == 'release'
         run: |
-          SDK_DIR=$(ls ~/ciq-sdk | head -1)
-          MONKEYC=~/ciq-sdk/$SDK_DIR/bin/monkeyc
           mkdir -p garmin-app/build
-
-          DEVICES=(
-            fr255 fr255s fr255m fr255sm
-            fr265 fr265s
-            fenix7 fenix7s fenix7x fenix7pro fenix7xpro
-            venu2 venu2s venu3 venu3s
-          )
-
-          for DEVICE in "${DEVICES[@]}"; do
-            echo "Building $DEVICE..."
-            $MONKEYC \
+          for DEVICE in fr255 fr255s fr255m fr255sm fr265 fr265s \
+                        fenix7 fenix7s fenix7x fenix7pro fenix7xpro \
+                        venu2 venu2s venu3 venu3s; do
+            echo "▸ Building $DEVICE..."
+            ~/ciq-sdk/*/bin/monkeyc \
               -f garmin-app/monkey.jungle \
               -o garmin-app/build/unforzed_${DEVICE}.iq \
               -d $DEVICE \
@@ -108,7 +107,7 @@ jobs:
           path: garmin-app/build/*.iq
           retention-days: 90
 
-      - name: Attach .iq files to GitHub Release
+      - name: Attach .iq to GitHub Release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
