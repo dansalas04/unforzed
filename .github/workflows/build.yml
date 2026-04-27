@@ -44,12 +44,7 @@ jobs:
           curl -L \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/octet-stream" \
-            "https://api.github.com/repos/${{ github.repository }}/releases/assets/$(
-              curl -s \
-                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ env.SDK_RELEASE_TAG }}" \
-                | python3 -c "import sys,json; assets=json.load(sys.stdin)['assets']; print(next(a['id'] for a in assets if a['name']=='${{ env.SDK_ASSET }}'))"
-            )" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/assets/406920429" \
             -o /tmp/sdk.zip
           unzip -q /tmp/sdk.zip -d ~/ciq-sdk
           chmod +x ~/ciq-sdk/*/bin/monkeyc
