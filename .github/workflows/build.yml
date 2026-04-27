@@ -1,0 +1,115 @@
+name: Build unforzed
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [created]   # en release: compila los 15 targets y adjunta los .iq
+
+env:
+  SDK_VERSION: "7.3.1"   # actualiza aquí cuando salga nueva versión del SDK
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Código ───────────────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── 2. Java (monkeyc lo necesita internamente) ───────────────────────
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # ── 3. SDK (cacheado por versión) ────────────────────────────────────
+      - name: Cache SDK
+        uses: actions/cache@v4
+        id: sdk-cache
+        with:
+          path: ~/ciq-sdk
+          key: ciq-sdk-lin-${{ env.SDK_VERSION }}
+
+      - name: Download SDK
+        if: steps.sdk-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/ciq-sdk
+          wget -q "${{ secrets.CIQ_SDK_URL }}" -O /tmp/sdk.zip
+          unzip -q /tmp/sdk.zip -d ~/ciq-sdk
+          chmod +x ~/ciq-sdk/*/bin/monkeyc
+
+      - name: Verify monkeyc
+        run: |
+          SDK_DIR=$(ls ~/ciq-sdk | head -1)
+          ~/ciq-sdk/$SDK_DIR/bin/monkeyc --version
+
+      # ── 4. Developer key (almacenada como GitHub Secret en base64) ───────
+      - name: Setup developer key
+        run: |
+          echo "${{ secrets.DEVELOPER_KEY_B64 }}" | base64 -d \
+            > garmin-app/developer_key.der
+
+      # ── 5a. Push a main → compila solo fr265 (build rápido de validación) ─
+      - name: Build (validation — fr265)
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        run: |
+          SDK_DIR=$(ls ~/ciq-sdk | head -1)
+          MONKEYC=~/ciq-sdk/$SDK_DIR/bin/monkeyc
+          mkdir -p garmin-app/build
+          $MONKEYC \
+            -f garmin-app/monkey.jungle \
+            -o garmin-app/build/unforzed_fr265.prg \
+            -d fr265 \
+            -c garmin-app/developer_key.der
+
+      - name: Upload validation artifact
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unforzed-fr265-${{ github.sha }}
+          path: garmin-app/build/unforzed_fr265.prg
+          retention-days: 7
+
+      # ── 5b. Release → compila los 15 targets y genera .iq ────────────────
+      - name: Build all targets (release)
+        if: github.event_name == 'release'
+        run: |
+          SDK_DIR=$(ls ~/ciq-sdk | head -1)
+          MONKEYC=~/ciq-sdk/$SDK_DIR/bin/monkeyc
+          mkdir -p garmin-app/build
+
+          DEVICES=(
+            fr255 fr255s fr255m fr255sm
+            fr265 fr265s
+            fenix7 fenix7s fenix7x fenix7pro fenix7xpro
+            venu2 venu2s venu3 venu3s
+          )
+
+          for DEVICE in "${DEVICES[@]}"; do
+            echo "Building $DEVICE..."
+            $MONKEYC \
+              -f garmin-app/monkey.jungle \
+              -o garmin-app/build/unforzed_${DEVICE}.iq \
+              -d $DEVICE \
+              -c garmin-app/developer_key.der \
+              --release
+          done
+
+      - name: Upload release artifacts
+        if: github.event_name == 'release'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unforzed-${{ github.ref_name }}-all-devices
+          path: garmin-app/build/*.iq
+          retention-days: 90
+
+      - name: Attach .iq files to GitHub Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: garmin-app/build/*.iq
