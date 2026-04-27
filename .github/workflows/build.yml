@@ -44,7 +44,7 @@ jobs:
           curl -L \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/octet-stream" \
-            "https://api.github.com/repos/${{ github.repository }}/releases/assets/406929642" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/assets/406942940" \
             -o /tmp/sdk.zip
           unzip -q /tmp/sdk.zip -d ~/ciq-sdk
           chmod -R 755 ~/ciq-sdk
