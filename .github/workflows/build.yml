@@ -9,7 +9,7 @@ on:
     types: [created]   # en release: compila los 15 targets y adjunta los .iq
 
 env:
-  SDK_VERSION: "7.3.1"   # actualiza aquí cuando salga nueva versión del SDK
+  SDK_VERSION: "9.1.0"   # actualiza aquí cuando salga nueva versión del SDK
 
 jobs:
   build:
