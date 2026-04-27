@@ -59,16 +59,8 @@ jobs:
           $MONKEYC --version
           echo "--- bin/ contents ---"
           ls $SDK_BIN/
-          echo "--- Devices/ ---"
-          ls ~/ciq-sdk/Devices/
-          echo "--- compilerInfo.xml ---"
-          cat $SDK_BIN/compilerInfo.xml 2>/dev/null || echo "no compilerInfo.xml"
-          echo "--- Devices/ (con permisos) ---"
-          ls -la ~/ciq-sdk/Devices/
-          echo "--- fenix8pro47mm ---"
-          ls ~/ciq-sdk/Devices/fenix8pro47mm/ 2>/dev/null || echo "not found"
-          echo "--- projectInfo.xml ---"
-          cat $SDK_BIN/projectInfo.xml 2>/dev/null | head -40 || echo "no projectInfo.xml"
+          echo "--- devices en projectInfo.xml ---"
+          grep -o 'id="[^"]*"' $SDK_BIN/projectInfo.xml | grep -i "fenix8\|instinct" | head -20 || echo "no matches"
 
       # ── 4. Developer key ────────────────────────────────────────────────────
       - name: Setup developer key
@@ -81,11 +73,15 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
           mkdir -p garmin-app/build
+          SDK_BIN=$(dirname $(ls ~/ciq-sdk/Sdks/*/bin/monkeyc))
           ~/ciq-sdk/Sdks/*/bin/monkeyc \
             -f garmin-app/monkey.jungle \
             -o garmin-app/build/unforzed_fenix8pro47mm.prg \
             -d fenix8pro47mm \
-            -y garmin-app/developer_key.der
+            -y garmin-app/developer_key.der \
+            -a $SDK_BIN/api.db \
+            -b $SDK_BIN/api.mir \
+            -p $SDK_BIN/projectInfo.xml
 
       - name: Upload validation artifact
         if: github.event_name == 'push' || github.event_name == 'pull_request'
