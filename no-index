@@ -1,1 +1,4 @@
 
+git clone https://github.com/dansalas04/unforzed.git                                                                                                                                                                                           
+  cd unforzed/garmin-app                                                                                                                                                                                                                         
+  ./build.sh --keygen
