@@ -44,21 +44,18 @@ jobs:
           curl -L \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/octet-stream" \
-            "https://api.github.com/repos/${{ github.repository }}/releases/assets/406920429" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/assets/406929642" \
             -o /tmp/sdk.zip
           unzip -q /tmp/sdk.zip -d ~/ciq-sdk
-          chmod +x ~/ciq-sdk/*/bin/monkeyc
+          chmod +x ~/ciq-sdk/ciq-bundle/Sdks/*/bin/monkeyc
 
       - name: Verify monkeyc
         run: |
-          SDK_DIR=$(ls ~/ciq-sdk | head -1)
-          echo "SDK dir: $SDK_DIR"
-          ls ~/ciq-sdk/$SDK_DIR/
-          ~/ciq-sdk/$SDK_DIR/bin/monkeyc --version
-          # List available device IDs
-          ls ~/ciq-sdk/$SDK_DIR/devices/ 2>/dev/null | head -20 || \
-          ls ~/ciq-sdk/$SDK_DIR/bin/../devices/ 2>/dev/null | head -20 || \
-          find ~/ciq-sdk/$SDK_DIR -name "devices.xml" 2>/dev/null | head -5
+          MONKEYC=$(ls ~/ciq-sdk/ciq-bundle/Sdks/*/bin/monkeyc)
+          echo "monkeyc: $MONKEYC"
+          $MONKEYC --version
+          echo "Devices available:"
+          ls ~/ciq-sdk/ciq-bundle/Devices/
 
       # ── 4. Developer key ────────────────────────────────────────────────────
       - name: Setup developer key
@@ -71,18 +68,18 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
           mkdir -p garmin-app/build
-          ~/ciq-sdk/*/bin/monkeyc \
+          ~/ciq-sdk/ciq-bundle/Sdks/*/bin/monkeyc \
             -f garmin-app/monkey.jungle \
-            -o garmin-app/build/unforzed_fr265.prg \
-            -d fr265 \
+            -o garmin-app/build/unforzed_fenix8pro47mm.prg \
+            -d fenix8pro47mm \
             -y garmin-app/developer_key.der
 
       - name: Upload validation artifact
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
-          name: unforzed-fr265-${{ github.sha }}
-          path: garmin-app/build/unforzed_fr265.prg
+          name: unforzed-fenix8pro47mm-${{ github.sha }}
+          path: garmin-app/build/unforzed_fenix8pro47mm.prg
           retention-days: 7
 
       # ── 5b. Release → compila los 15 targets ────────────────────────────────
@@ -90,11 +87,12 @@ jobs:
         if: github.event_name == 'release'
         run: |
           mkdir -p garmin-app/build
-          for DEVICE in fr255 fr255s fr255m fr255sm fr265 fr265s \
-                        fenix7 fenix7s fenix7x fenix7pro fenix7xpro \
-                        venu2 venu2s venu3 venu3s; do
+          for DEVICE in \
+            fenix843mm fenix847mm fenix8pro47mm fenix8solar47mm fenix8solar51mm \
+            instinct2 instinct2s instinct2x \
+            instinct3amoled45mm instinct3amoled50mm instinct3solar45mm; do
             echo "▸ Building $DEVICE..."
-            ~/ciq-sdk/*/bin/monkeyc \
+            ~/ciq-sdk/ciq-bundle/Sdks/*/bin/monkeyc \
               -f garmin-app/monkey.jungle \
               -o garmin-app/build/unforzed_${DEVICE}.iq \
               -d $DEVICE \

@@ -22,10 +22,9 @@ error() { echo -e "${RED}✗${NC} $*" >&2; exit 1; }
 
 # ── Targets soportados ────────────────────────────────────────────────────────
 ALL_DEVICES=(
-  fr255 fr255s fr255m fr255sm
-  fr265 fr265s
-  fenix7 fenix7s fenix7x fenix7pro fenix7xpro
-  venu2 venu2s venu3 venu3s
+  fenix843mm fenix847mm fenix8pro47mm fenix8solar47mm fenix8solar51mm
+  instinct2 instinct2s instinct2x
+  instinct3amoled45mm instinct3amoled50mm instinct3solar45mm
 )
 
 # ── Defaults ──────────────────────────────────────────────────────────────────
