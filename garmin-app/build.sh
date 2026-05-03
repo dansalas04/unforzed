@@ -183,15 +183,15 @@ build_device() {
   local ext; $RELEASE && ext="iq" || ext="prg"
   local out="${OUT_DIR}/unforzed_${dev}.${ext}"
 
-  echo ""
-  info "Building ${BOLD}${dev}${NC} → $(basename "${out}")"
+  echo "" >&2
+  info "Building ${BOLD}${dev}${NC} → $(basename "${out}")" >&2
 
   local flags=(-f "${JUNGLE}" -o "${out}" -d "${dev}" -y "${KEY_DER}")
   $RELEASE && flags+=(--release) || flags+=()
 
-  if "${MONKEYC}" "${flags[@]}" 2>&1; then
-    ok "${dev}: ${out}"
-    echo "${out}"   # retorna la ruta para --run
+  if "${MONKEYC}" "${flags[@]}" >&2 2>&1; then
+    ok "${dev}: ${out}" >&2
+    echo "${out}"   # solo el path va a stdout (para captura en --run)
   else
     echo -e "${RED}✗ Build fallido para ${dev}${NC}" >&2
     return 1
