@@ -160,7 +160,7 @@ if $KEYGEN; then
   if [[ -f "${KEY_DER}" ]]; then
     warn "developer_key.der ya existe. Usa --keygen solo si quieres regenerar."
     read -r -p "¿Regenerar? (s/N): " confirm
-    [[ "${confirm,,}" == "s" ]] || { info "Cancelado."; exit 0; }
+    [[ "$(echo "$confirm" | tr '[:upper:]' '[:lower:]')" == "s" ]] || { info "Cancelado."; exit 0; }
   fi
   generate_key
   exit 0
@@ -170,7 +170,7 @@ fi
 if [[ ! -f "${KEY_DER}" ]]; then
   warn "developer_key.der no encontrado."
   read -r -p "¿Generar ahora? (S/n): " confirm
-  [[ "${confirm,,}" == "n" ]] && error "Se necesita developer_key.der para compilar."
+  [[ "$(echo "$confirm" | tr '[:upper:]' '[:lower:]')" == "n" ]] && error "Se necesita developer_key.der para compilar."
   generate_key
 fi
 
