@@ -131,6 +131,10 @@ class SetSummaryDelegate extends WatchUi.BehaviorDelegate {
     }
 
     function onBack() as Boolean {
-        return onKey(null);
+        var view = WatchUi.getCurrentView()[0] as SetSummaryView?;
+        if (view instanceof SetSummaryView) {
+            (view as SetSummaryView)._dismiss();
+        }
+        return true;
     }
 }
