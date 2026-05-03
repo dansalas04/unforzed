@@ -5,7 +5,7 @@
     id="a3f2c1d4-e5b6-7890-abcd-ef1234567891"
     minSdkVersion="3.2.0"
     name="@Strings.AppName"
-    type="watchapp"
+    type="activity"
     version="1.0.0">
 
     <iq:products>
