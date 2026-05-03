@@ -146,14 +146,11 @@ class DashboardDelegate extends WatchUi.BehaviorDelegate {
 
     // LIGHT (top-left): toggle serve
     function onKey(evt as WatchUi.KeyEvent) as Boolean {
-        if (evt.getKey() == WatchUi.KEY_LIGHT
-            && evt.getType() == WatchUi.KEY_PRESSED) {
+        if (evt.getKey() == WatchUi.KEY_LIGHT) {
             _handleSaque();
             return true;
         }
-        // DOWN (bottom-left via next page in some layouts): undo
-        if (evt.getKey() == WatchUi.KEY_DOWN
-            && evt.getType() == WatchUi.KEY_PRESSED) {
+        if (evt.getKey() == WatchUi.KEY_DOWN) {
             _handleUndo();
             return true;
         }
