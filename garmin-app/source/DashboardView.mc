@@ -80,8 +80,7 @@ class DashboardView extends WatchUi.View {
 
     function _drawMetrics(dc as Graphics.Dc, cx as Number, h as Number,
                           m as MatchModel) as Void {
-        var enfTotal = m.totalEnf();
-        var enfPct   = m.enfPercentage();
+        var enfPG    = m.enfPerGame();
         var sd       = m.serveWinData();
         var pctCon   = sd["pctConSaque"] as Number;
         var pctSin   = sd["pctSinSaque"] as Number;
@@ -92,16 +91,15 @@ class DashboardView extends WatchUi.View {
         var f   = Graphics.FONT_XTINY;
         var fx  = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
 
-        // Two columns: left = ENF data, right = serve win data
         var lx = cx - cx / 2;
         var rx = cx + cx / 2;
 
         dc.setColor(col, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(lx, y0, f, "ENF", fx);
-        dc.drawText(rx, y0, f, "%c/s", fx);
+        dc.drawText(lx, y0, f, "Errores/Juego", fx);
+        dc.drawText(rx, y0, f, "Saque|Resto", fx);
 
         dc.setColor(col2, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(lx, y0 + 16, f, enfTotal.toString() + "  (" + enfPct + "%)", fx);
+        dc.drawText(lx, y0 + 16, f, enfPG, fx);
         dc.drawText(rx, y0 + 16, f, pctCon + "% / " + pctSin + "%", fx);
     }
 
