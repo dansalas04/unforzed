@@ -3,7 +3,7 @@
   <iq:application
     entry="UnforzedApp"
     id="a3f2c1d4-e5b6-7890-abcd-ef1234567891"
-    icon="Rez.Drawables.LauncherIcon"
+    launcherIcon="Rez.Drawables.LauncherIcon"
     minSdkVersion="3.2.0"
     name="@Strings.AppName"
     type="watch-app"
