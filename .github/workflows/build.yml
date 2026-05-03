@@ -51,6 +51,14 @@ jobs:
           echo "--- zip entries con Devices ---"
           unzip -l /tmp/sdk.zip | grep -E "Devices/" | head -20 || echo "NO Devices en el zip"
 
+      - name: Install devices to SDK path
+        run: |
+          GARMIN_DEVICES=~/Library/Application\ Support/Garmin/ConnectIQ/Devices
+          mkdir -p "$GARMIN_DEVICES"
+          cp -r ~/ciq-sdk/Devices/. "$GARMIN_DEVICES/"
+          echo "--- devices instalados ---"
+          ls "$GARMIN_DEVICES/" | head -20
+
       - name: Verify monkeyc
         run: |
           MONKEYC=$(ls ~/ciq-sdk/Sdks/*/bin/monkeyc)
