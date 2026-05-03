@@ -170,13 +170,10 @@ class DashboardDelegate extends WatchUi.BehaviorDelegate {
     }
 
     // Long START: open edit menu
-    function onHold(evt as WatchUi.KeyEvent) as Boolean {
-        if (evt.getKey() == WatchUi.KEY_ENTER) {
-            WatchUi.pushView(new EditMenuView(), new EditMenuDelegate(),
-                             WatchUi.SLIDE_UP);
-            return true;
-        }
-        return false;
+    function onHold(evt as WatchUi.ClickEvent) as Boolean {
+        WatchUi.pushView(new EditMenuView(), new EditMenuDelegate(),
+                         WatchUi.SLIDE_UP);
+        return true;
     }
 
     // BACK/LAP (bottom-right): juego perdido
