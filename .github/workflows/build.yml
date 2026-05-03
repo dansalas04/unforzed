@@ -81,15 +81,11 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
           mkdir -p garmin-app/build
-          SDK_BIN=$(dirname $(ls ~/ciq-sdk/Sdks/*/bin/monkeyc))
           ~/ciq-sdk/Sdks/*/bin/monkeyc \
             -f garmin-app/monkey.jungle \
             -o garmin-app/build/unforzed_fenix8pro47mm.prg \
             -d fenix8pro47mm \
-            -y garmin-app/developer_key.der \
-            -a $SDK_BIN/api.db \
-            -b $SDK_BIN/api.mir \
-            -p $SDK_BIN/projectInfo.xml
+            -y garmin-app/developer_key.der
 
       - name: Upload validation artifact
         if: github.event_name == 'push' || github.event_name == 'pull_request'
