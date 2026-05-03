@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <drawables>
+  <bitmap id="LauncherIcon" filename="launcher_icon.png"/>
+
   <!-- Background colors for feedback screens -->
   <color id="ColorBgGanado">0x1A4A2E</color>   <!-- dark green -->
   <color id="ColorBgPerdido">0x4A1A1A</color>  <!-- dark red -->
