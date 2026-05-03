@@ -31,8 +31,8 @@
     </iq:permissions>
 
     <iq:languages>
-      <iq:language id="spa"/>
-      <iq:language id="eng"/>
+      <iq:language>spa</iq:language>
+      <iq:language>eng</iq:language>
     </iq:languages>
 
   </iq:application>
