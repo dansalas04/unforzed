@@ -127,7 +127,7 @@ class FinalSummaryView extends WatchUi.View {
     function _drawPage3(dc as Graphics.Dc, cx as Number, w as Number, h as Number) as Void {
         var m        = _model;
         var enfTotal = m.totalEnf();
-        var enfPct   = m.enfPercentage();
+        var enfPG    = m.enfPerGame();
         var bestSet  = m.bestSetByEnf();
 
         dc.setColor(0xFF8800, Graphics.COLOR_TRANSPARENT);
@@ -135,8 +135,7 @@ class FinalSummaryView extends WatchUi.View {
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         _drawStatRow(dc, cx, h * 27 / 100, "Totales", enfTotal.toString());
-        _drawStatRow(dc, cx, h * 40 / 100, "ENF / juego",
-            (enfPct / 10).toString() + "." + (enfPct % 10).toString());
+        _drawStatRow(dc, cx, h * 40 / 100, "ENF / juego", enfPG);
 
         // By set
         dc.setColor(0x666666, Graphics.COLOR_TRANSPARENT);
