@@ -25,6 +25,10 @@
       <iq:product id="instinct3solar45mm"/>
     </iq:products>
 
+    <iq:icons>
+      <iq:icon>Rez.Drawables.LauncherIcon</iq:icon>
+    </iq:icons>
+
     <iq:permissions>
       <iq:uses-permission id="FitContributor"/>
       <iq:uses-permission id="UserProfile"/>
