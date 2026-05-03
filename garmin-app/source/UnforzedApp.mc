@@ -18,10 +18,10 @@ class UnforzedApp extends Application.AppBase {
     }
 
     // Initial view: position-selection step of the setup wizard
-    function getInitialView() as Array<Views or InputDelegates> {
+    function getInitialView() as Array<WatchUi.Views or WatchUi.InputDelegates> {
         var view = new SetupView(:position);
         var delegate = new SetupDelegate(view);
-        return [view, delegate] as Array<Views or InputDelegates>;
+        return [view, delegate] as Array<WatchUi.Views or WatchUi.InputDelegates>;
     }
 }
 
