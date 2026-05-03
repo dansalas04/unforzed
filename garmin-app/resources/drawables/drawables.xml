@@ -1,24 +1,4 @@
 <?xml version="1.0"?>
 <drawables>
   <bitmap id="LauncherIcon" filename="launcher_icon.svg" dithering="none"/>
-
-  <!-- Background colors for feedback screens -->
-  <color id="ColorBgGanado">0x1A4A2E</color>   <!-- dark green -->
-  <color id="ColorBgPerdido">0x4A1A1A</color>  <!-- dark red -->
-  <color id="ColorBgEnf">0x4A2E0A</color>      <!-- dark orange -->
-  <color id="ColorBgSaque">0x0A2A4A</color>    <!-- dark blue -->
-  <color id="ColorBgDeshacer">0x2A2A2A</color> <!-- neutral gray -->
-
-  <!-- Dashboard accent colors -->
-  <color id="ColorSaque">0x0099FF</color>      <!-- bright blue for serve indicator -->
-  <color id="ColorEnf">0xFF8800</color>        <!-- orange for ENF dots -->
-  <color id="ColorRival">0x888888</color>      <!-- gray for rival scores -->
-  <color id="ColorSetWon">0xFFFFFF</color>     <!-- white filled dot = set won -->
-  <color id="ColorSetLost">0x444444</color>    <!-- dark dot = set lost by us -->
-
-  <!-- General UI -->
-  <color id="ColorAccent">0x00AAFF</color>     <!-- interactive highlight -->
-  <color id="ColorDim">0x666666</color>        <!-- secondary text -->
-  <color id="ColorBg">0x000000</color>         <!-- screen background -->
-  <color id="ColorFg">0xFFFFFF</color>         <!-- primary text -->
 </drawables>
