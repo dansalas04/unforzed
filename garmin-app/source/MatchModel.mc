@@ -313,11 +313,11 @@ class MatchModel {
         return total;
     }
 
-    function enfPercentage() as Number {
-        // ENF / juegos * 100, integer
+    function enfPerGame() as String {
         var g = games.size();
-        if (g == 0) { return 0; }
-        return (totalEnf() * 100 / g);
+        if (g == 0) { return "0.0"; }
+        var tenths = totalEnf() * 10 / g;
+        return (tenths / 10).toString() + "." + (tenths % 10).toString();
     }
 
     // Games won with serve / total games with serve
