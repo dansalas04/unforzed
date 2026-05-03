@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<resources>
+  <!-- Background colors for feedback screens -->
+  <color id="ColorBgGanado">0x1A4A2E</color>
+  <color id="ColorBgPerdido">0x4A1A1A</color>
+  <color id="ColorBgEnf">0x4A2E0A</color>
+  <color id="ColorBgSaque">0x0A2A4A</color>
+  <color id="ColorBgDeshacer">0x2A2A2A</color>
+
+  <!-- Dashboard accent colors -->
+  <color id="ColorSaque">0x0099FF</color>
+  <color id="ColorEnf">0xFF8800</color>
+  <color id="ColorRival">0x888888</color>
+  <color id="ColorSetWon">0xFFFFFF</color>
+  <color id="ColorSetLost">0x444444</color>
+
+  <!-- General UI -->
+  <color id="ColorAccent">0x00AAFF</color>
+  <color id="ColorDim">0x666666</color>
+  <color id="ColorBg">0x000000</color>
+  <color id="ColorFg">0xFFFFFF</color>
+</resources>
