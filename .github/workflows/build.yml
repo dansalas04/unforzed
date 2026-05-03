@@ -72,9 +72,11 @@ jobs:
           echo "--- compilerInfo.xml ---"
           cat $SDK_BIN/compilerInfo.xml || echo "no compilerInfo.xml"
           echo "--- watch-app template manifest ---"
-          cat $SDK_BIN/templates/watch-app/manifest.xml 2>/dev/null || echo "no watch-app template"
-          echo "--- watch-app template files ---"
-          find $SDK_BIN/templates/watch-app -type f 2>/dev/null | head -20 || echo "no files"
+          cat $SDK_BIN/templates/watch-app/simple/manifest.xml 2>/dev/null || echo "no manifest"
+          echo "--- watch-app template drawables ---"
+          cat $SDK_BIN/templates/watch-app/simple/resources/drawables/drawables.xml 2>/dev/null || echo "no drawables"
+          echo "--- launcher_icon.svg ---"
+          cat $SDK_BIN/templates/watch-app/simple/resources/drawables/launcher_icon.svg 2>/dev/null || echo "no svg"
 
       # ── 4. Developer key ────────────────────────────────────────────────────
       - name: Setup developer key
