@@ -69,6 +69,12 @@ jobs:
           ls $SDK_BIN/
           echo "--- devices en projectInfo.xml ---"
           grep -o 'id="[^"]*"' $SDK_BIN/projectInfo.xml | grep -i "fenix8\|instinct" | head -20 || echo "no matches"
+          echo "--- compilerInfo.xml ---"
+          cat $SDK_BIN/compilerInfo.xml || echo "no compilerInfo.xml"
+          echo "--- templates ---"
+          ls $SDK_BIN/templates/ 2>/dev/null || echo "no templates dir"
+          echo "--- device fenix8pro47mm ---"
+          ls ~/Library/Application\ Support/Garmin/ConnectIQ/Devices/fenix8pro47mm/ 2>/dev/null | head -10 || echo "device dir not found"
 
       # ── 4. Developer key ────────────────────────────────────────────────────
       - name: Setup developer key
